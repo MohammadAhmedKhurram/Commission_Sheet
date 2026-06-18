@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Versatile Visions Commission Sheet</title>
+  <style>
+    :root{
+      --bg:#0c1016;
+      --bg2:#111826;
+      --panel:rgba(20,26,34,0.88);
+      --panel-2:rgba(26,34,48,0.9);
+      --text:#f2f6ff;
+      --muted:#b7c4d8;
+      --subtle:#8e9aaf;
+      --cyan:#39d5ff;
+      --purple:#9d6bff;
+      --teal:#35e0c8;
+      --line:rgba(255,255,255,0.08);
+      --shadow:0 18px 40px rgba(0,0,0,.38);
+      --radius:22px;
+      --radius-sm:16px;
+      --maxw:1080px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:#0a0f15;color:var(--text);font-family:Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    body{
+      background:
+        radial-gradient(circle at 15% 10%, rgba(57,213,255,.12), transparent 24%),
+        radial-gradient(circle at 85% 18%, rgba(157,107,255,.14), transparent 25%),
+        radial-gradient(circle at 50% 90%, rgba(53,224,200,.08), transparent 24%),
+        linear-gradient(180deg, #0b1017 0%, #0d1320 48%, #0a0f15 100%);
+      min-height:100vh;
+    }
+
+    .page{
+      width:min(100%, var(--maxw));
+      margin:0 auto;
+      padding:28px 18px 48px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .page::before,
+    .page::after{
+      content:"";
+      position:fixed;
+      inset:auto;
+      pointer-events:none;
+      z-index:0;
+      filter:blur(50px);
+      opacity:.5;
+    }
+
+    .page::before{
+      width:260px;height:260px;
+      top:80px;left:-40px;
+      background:radial-gradient(circle, rgba(57,213,255,.22), transparent 70%);
+    }
+    .page::after{
+      width:320px;height:320px;
+      top:180px;right:-60px;
+      background:radial-gradient(circle, rgba(157,107,255,.18), transparent 70%);
+    }
+
+    .sheet{
+      position:relative;
+      z-index:1;
+      border:1px solid rgba(255,255,255,.06);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
+        linear-gradient(180deg, rgba(17,24,38,.82), rgba(11,16,23,.92));
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .sheet::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(57,213,255,.08), transparent 18%),
+        radial-gradient(circle at 88% 20%, rgba(157,107,255,.08), transparent 16%),
+        radial-gradient(circle at 70% 72%, rgba(53,224,200,.05), transparent 18%);
+      pointer-events:none;
+    }
+
+    .topbar{
+      height:5px;
+      background:linear-gradient(90deg, var(--cyan), var(--purple), var(--teal));
+    }
+
+    .content{
+      padding:34px 28px 34px;
+    }
+
+    .header{
+      position:relative;
+      padding:26px 24px 24px;
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:
+        linear-gradient(135deg, rgba(57,213,255,.06), rgba(157,107,255,.06) 55%, rgba(53,224,200,.05));
+      overflow:hidden;
+    }
+
+    .header::before{
+      content:"✦";
+      position:absolute;
+      right:22px;
+      top:18px;
+      font-size:26px;
+      color:rgba(57,213,255,.75);
+      text-shadow:0 0 18px rgba(57,213,255,.55);
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--cyan);
+      font-weight:700;
+      margin-bottom:10px;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(34px, 5vw, 60px);
+      line-height:1;
+      letter-spacing:.08em;
+      font-weight:900;
+      text-transform:uppercase;
+    }
+
+    .subtitle{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:clamp(16px, 2vw, 22px);
+      font-weight:600;
+    }
+
+    .header-meta{
+      margin-top:18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:800;
+      letter-spacing:.04em;
+      border:1px solid rgba(57,213,255,.25);
+      background:rgba(57,213,255,.08);
+      color:#dff8ff;
+      box-shadow:0 0 0 1px rgba(57,213,255,.06) inset, 0 0 22px rgba(57,213,255,.08);
+    }
+
+    .handle{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(157,107,255,.22);
+      background:rgba(157,107,255,.08);
+      color:#efe5ff;
+      font-weight:700;
+    }
+
+    .grid{
+      display:grid;
+      gap:18px;
+      margin-top:22px;
+    }
+
+    .section{
+      padding:20px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:var(--panel);
+      box-shadow:var(--shadow);
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin:0 0 16px;
+      font-size:14px;
+      font-weight:900;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--cyan);
+    }
+
+    .section-title::after{
+      content:"";
+      height:1px;
+      flex:1;
+      background:linear-gradient(90deg, rgba(57,213,255,.26), rgba(157,107,255,.12), transparent);
+    }
+
+    .styles{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .style-card{
+      min-height:180px;
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
+        var(--panel-2);
+      padding:16px;
+    }
+
+    .style-art{
+      height:88px;
+      border-radius:16px;
+      margin-bottom:14px;
+      display:grid;
+      place-items:center;
+      font-size:42px;
+      background:
+        radial-gradient(circle at 25% 25%, rgba(57,213,255,.15), transparent 45%),
+        radial-gradient(circle at 80% 25%, rgba(157,107,255,.18), transparent 40%),
+        linear-gradient(135deg, rgba(53,224,200,.1), rgba(157,107,255,.08));
+      border:1px solid rgba(255,255,255,.05);
+    }
+
+    .style-card h3{
+      margin:0 0 8px;
+      font-size:18px;
+      line-height:1.2;
+    }
+
+    .style-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .pricing{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+
+    .price-card{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.01)), var(--panel-2);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .price-card.featured{
+      grid-column:1 / -1;
+      background:
+        linear-gradient(135deg, rgba(57,213,255,.06), rgba(157,107,255,.06), rgba(53,224,200,.05)),
+        var(--panel-2);
+    }
+
+    .price-top{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      margin-bottom:8px;
+    }
+
+    .price-top h3{
+      margin:0;
+      font-size:20px;
+      line-height:1.2;
+    }
+
+    .price{
+      white-space:nowrap;
+      font-weight:900;
+      font-size:26px;
+      color:var(--text);
+      text-shadow:0 0 18px rgba(57,213,255,.08);
+    }
+
+    .desc{
+      color:var(--muted);
+      line-height:1.55;
+      font-size:14px;
+    }
+
+    .tag-mini{
+      display:inline-block;
+      margin-top:10px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:#dff8ff;
+      background:rgba(57,213,255,.08);
+      border:1px solid rgba(57,213,255,.2);
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+
+    .simple-card{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:var(--panel-2);
+      padding:18px;
+      min-height:110px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:8px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .simple-card .emoji{
+      font-size:26px;
+      opacity:.92;
+    }
+
+    .simple-card h3{
+      margin:0;
+      font-size:20px;
+      line-height:1.2;
+    }
+
+    .simple-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .emote-preview{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+
+    .bubble{
+      width:52px;height:52px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      font-size:24px;
+      border:1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(135deg, rgba(57,213,255,.08), rgba(157,107,255,.08)),
+        var(--panel-2);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    .list{
+      display:grid;
+      gap:12px;
+    }
+
+    .list-row{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+    }
+
+    .icon-dot{
+      width:30px;height:30px;
+      flex:0 0 30px;
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      background:rgba(57,213,255,.1);
+      color:var(--cyan);
+      font-size:14px;
+      font-weight:900;
+      margin-top:1px;
+    }
+
+    .list-row strong{
+      display:block;
+      margin-bottom:2px;
+      font-size:16px;
+    }
+
+    .list-row span{
+      color:var(--muted);
+      line-height:1.45;
+      font-size:14px;
+    }
+
+    .terms{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .term{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      color:var(--text);
+      font-size:15px;
+      line-height:1.4;
+    }
+
+    .term .check{
+      color:var(--teal);
+      font-weight:900;
+    }
+
+    .steps{
+      display:grid;
+      gap:12px;
+    }
+
+    .step{
+      display:grid;
+      grid-template-columns:52px 1fr;
+      gap:12px;
+      align-items:center;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+    }
+
+    .num{
+      width:52px;height:52px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:20px;
+      color:white;
+      background:linear-gradient(135deg, rgba(57,213,255,.22), rgba(157,107,255,.22));
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .step strong{
+      display:block;
+      font-size:16px;
+      margin-bottom:2px;
+    }
+
+    .step span{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .footer{
+      margin-top:18px;
+      padding:26px 22px 24px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(57,213,255,.06), rgba(157,107,255,.06), rgba(53,224,200,.05));
+      text-align:center;
+    }
+
+    .footer p{
+      margin:0 0 14px;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .cta{
+      margin:0;
+      font-size:clamp(28px, 4vw, 46px);
+      line-height:1.05;
+      font-weight:900;
+      letter-spacing:.03em;
+      color:var(--text);
+      text-shadow:0 0 28px rgba(57,213,255,.14);
+    }
+
+    .small-note{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--subtle);
+      text-align:center;
+    }
+
+    @media (max-width: 860px){
+      .styles,
+      .pricing,
+      .two-col,
+      .terms{
+        grid-template-columns:1fr;
+      }
+      .price-card.featured{
+        grid-column:auto;
+      }
+      .content{
+        padding:20px 14px 24px;
+      }
+      .header{
+        padding:20px 16px;
+      }
+      .section{
+        padding:16px;
+      }
+      .price-top{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .price{
+        font-size:24px;
+      }
+    }
+
+    @media print{
+      body{background:#fff}
+      .page{width:100%;padding:0}
+      .sheet{border-radius:0;box-shadow:none}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="sheet">
+      <div class="topbar"></div>
+
+      <div class="content">
+        <header class="header">
+          <div class="kicker">Premium Digital Artist Branding</div>
+          <h1>VERSATILE VISIONS</h1>
+          <div class="subtitle">Furry • Anime • Fantasy / D&amp;D Artist</div>
+
+          <div class="header-meta">
+            <div class="badge">Commissions OPEN</div>
+            <div class="handle">@verst_visions</div>
+          </div>
+        </header>
+
+        <div class="grid">
+          <section class="section">
+            <h2 class="section-title">My Styles</h2>
+            <div class="styles">
+              <article class="style-card">
+                <div class="style-art">🐺</div>
+                <h3>Furry / Anthro Characters</h3>
+                <p>Expressive anthro characters with clean rendering, personality, and polished detail.</p>
+              </article>
+
+              <article class="style-card">
+                <div class="style-art">✨</div>
+                <h3>Anime Illustrations</h3>
+                <p>Stylized anime-inspired art with vibrant presentation, appealing poses, and refined shading.</p>
+              </article>
+
+              <article class="style-card">
+                <div class="style-art">⚔️</div>
+                <h3>Fantasy &amp; D&amp;D Character Art</h3>
+                <p>Original adventurers, magical heroes, and fantasy RPG designs with cinematic flair.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">Commission Prices</h2>
+            <div class="pricing">
+              <article class="price-card">
+                <div class="price-top">
+                  <h3>Icon / Headshot</h3>
+                  <div class="price">\$40</div>
+                </div>
+                <div class="desc">Clean portrait with detailed shading</div>
+              </article>
+
+              <article class="price-card">
+                <div class="price-top">
+                  <h3>Bust</h3>
+                  <div class="price">\$60</div>
+                </div>
+                <div class="desc">Upper body with expressive pose</div>
+              </article>
+
+              <article class="price-card">
+                <div class="price-top">
+                  <h3>Half Body</h3>
+                  <div class="price">\$70</div>
+                </div>
+                <div class="desc">Waist-up with dynamic pose</div>
+              </article>
+
+              <article class="price-card">
+                <div class="price-top">
+                  <h3>Full Body</h3>
+                  <div class="price">\$120</div>
+                </div>
+                <div class="desc">Full character with simple background</div>
+              </article>
+
+              <article class="price-card featured">
+                <div class="price-top">
+                  <h3>Reference Sheet</h3>
+                  <div class="price">\$150+</div>
+                </div>
+                <div class="desc">Front view, side view, details</div>
+                <div class="tag-mini">Extra views +\$40 each</div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">Background Add-Ons</h2>
+            <div class="two-col">
+              <article class="simple-card">
+                <div class="emoji">🌌</div>
+                <h3>Simple Background +\$20</h3>
+                <p>Basic scene elements, color framing, or light environmental atmosphere.</p>
+              </article>
+
+              <article class="simple-card">
+                <div class="emoji">🏰</div>
+                <h3>Complex Background +\$50+</h3>
+                <p>Detailed environment work, props, lighting, and fantasy scenery.</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">Emotes</h2>
+            <div class="emote-preview" aria-hidden="true">
+              <div class="bubble">😊</div>
+              <div class="bubble">😠</div>
+              <div class="bubble">😭</div>
+              <div class="bubble">😏</div>
+              <div class="bubble">✨</div>
+            </div>
+
+            <div class="pricing">
+              <article class="price-card">
+                <div class="price-top">
+                  <h3>Static Emote Bundle</h3>
+                  <div class="price">\$30</div>
+                </div>
+                <div class="desc">3 custom static emotes</div>
+              </article>
+
+              <article class="price-card">
+                <div class="price-top">
+                  <h3>Animated Emote Bundle</h3>
+                  <div class="price">\$50</div>
+                </div>
+                <div class="desc">3 custom animated emotes</div>
+              </article>
+
+              <article class="price-card">
+                <div class="price-top">
+                  <h3>Individual Static Emote</h3>
+                  <div class="price">\$12</div>
+                </div>
+              </article>
+
+              <article class="price-card">
+                <div class="price-top">
+                  <h3>Individual Animated Emote</h3>
+                  <div class="price">\$20</div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">Add-Ons</h2>
+            <div class="list">
+              <div class="list-row">
+                <div class="icon-dot">+</div>
+                <div>
+                  <strong>Extra Character +70% of base price</strong>
+                  <span>Add an additional character while maintaining composition and polish.</span>
+                </div>
+              </div>
+
+              <div class="list-row">
+                <div class="icon-dot">✦</div>
+                <div>
+                  <strong>Detailed Outfit/Accessories +\$15–35</strong>
+                  <span>For intricate clothing, armor, ornate props, or layered accessories.</span>
+                </div>
+              </div>
+
+              <div class="list-row">
+                <div class="icon-dot">©</div>
+                <div>
+                  <strong>Commercial Use +50% of base price</strong>
+                  <span>Required for monetized, promotional, or business-related usage.</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">Payment</h2>
+            <div class="list">
+              <div class="list-row">
+                <div class="icon-dot">1</div>
+                <div>
+                  <strong>100% Upfront</strong>
+                  <span>Full payment is required before work begins.</span>
+                </div>
+              </div>
+
+              <div class="list-row">
+                <div class="icon-dot">P</div>
+                <div>
+                  <strong>PayPal</strong>
+                  <span>Primary payment method.</span>
+                </div>
+              </div>
+
+              <div class="list-row">
+                <div class="icon-dot">?</div>
+                <div>
+                  <strong>Other payment methods available upon discussion</strong>
+                  <span>Please ask in advance if you need an alternate option.</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">Terms of Service</h2>
+            <div class="terms">
+              <div class="term"><span class="check">✓</span><span>SFW Only</span></div>
+              <div class="term"><span class="check">✓</span><span>No NSFW or fetish content</span></div>
+              <div class="term"><span class="check">✓</span><span>Right to decline commissions</span></div>
+              <div class="term"><span class="check">✓</span><span>Minor sketch revisions included</span></div>
+              <div class="term"><span class="check">✓</span><span>WIPs provided</span></div>
+              <div class="term"><span class="check">✓</span><span>Turnaround 1–4 weeks</span></div>
+              <div class="term"><span class="check">✓</span><span>Commercial rights require purchase</span></div>
+              <div class="term"><span class="check">✓</span><span>No refunds after sketch approval</span></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2 class="section-title">How to Commission</h2>
+            <div class="steps">
+              <div class="step">
+                <div class="num">1</div>
+                <div>
+                  <strong>DM @verst_visions</strong>
+                  <span>Reach out directly to start the process.</span>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="num">2</div>
+                <div>
+                  <strong>Send references and description</strong>
+                  <span>Provide character refs, notes, and anything important for the artwork.</span>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="num">3</div>
+                <div>
+                  <strong>Choose commission type</strong>
+                  <span>Select the option that best fits your request and budget.</span>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="num">4</div>
+                <div>
+                  <strong>Explain pose, outfit, mood, or expression</strong>
+                  <span>Share the creative direction you want for the final piece.</span>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="num">5</div>
+                <div>
+                  <strong>Receive quote and invoice</strong>
+                  <span>Final pricing and payment details will be confirmed before work begins.</span>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="num">6</div>
+                <div>
+                  <strong>Artwork begins</strong>
+                  <span>Once payment is received, your commission is added to the queue.</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <footer class="footer">
+            <p>Thank you for supporting independent artists.</p>
+            <h2 class="cta">DM @verst_visions</h2>
+          </footer>
+
+          <div class="small-note">Save this file as <strong>commission-sheet.html</strong> and open it in your browser.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
